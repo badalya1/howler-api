@@ -14,7 +14,7 @@ describe('Testing Users', () => {
       usersRoute.usersController.userService.users.find = jest.fn().mockReturnValue(
         Promise.resolve([
           {
-            email: 'example@gmail.com',
+            username: 'exampleUsername',
             password: 'q1w2e3r4!',
           },
         ]),
