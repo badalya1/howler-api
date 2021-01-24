@@ -14,7 +14,7 @@ afterAll(async () => {
 
 describe('Testing AuthController', () => {
   describe('POST /signup', () => {
-    it('response should have the Create userData', () => {
+    it('response should have the userData', () => {
       const userData: CreateUserDto = {
         username: 'badalya1',
         password: 'q1w2e3r4!',
@@ -87,7 +87,7 @@ describe('Testing AuthService', () => {
   });
 
   describe('when registering a user', () => {
-    describe('if the email is already token', () => {
+    describe('if the username is already taken', () => {
       it('should throw an error', async () => {
         const userData: CreateUserDto = {
           username: 'badalya1',
@@ -98,9 +98,7 @@ describe('Testing AuthService', () => {
 
         authService.users.findOne = jest.fn().mockReturnValue(Promise.resolve(userData));
 
-        await expect(authService.signup(userData)).rejects.toMatchObject(
-          new HttpException(409, `User with username ${userData.username} already exists`),
-        );
+        await expect(authService.signup(userData)).rejects.toThrow(new HttpException(409, `Username ${userData.username} already exists`));
       });
     });
 
