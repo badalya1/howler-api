@@ -45,7 +45,7 @@ class HowlsController {
   public updateHowl = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {};
 
   public getHowlsByUserId = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    const userId: string = req.params.userId;
+    const userId: string = req.params.userId || req.user.id;
     try {
       const howlsByUserId: Howl[] = await this.howlService.getHowlsByUserId(userId);
       res.status(200).json({ data: howlsByUserId, message: 'howlsByUser' });
