@@ -51,16 +51,18 @@ const logger = winston.createLogger({
   ],
 });
 
-logger.add(
-  new winston.transports.Console({
-    format: combine(
-      timestamp({
-        format: 'YYYY-MM-DD HH:mm:ss',
-      }),
-      logFormat,
-    ),
-  }),
-);
+if (process.env.JEST_WORKER_ID == undefined) {
+  logger.add(
+    new winston.transports.Console({
+      format: combine(
+        timestamp({
+          format: 'YYYY-MM-DD HH:mm:ss',
+        }),
+        logFormat,
+      ),
+    }),
+  );
+}
 
 const stream = {
   write: (message: string) => {
