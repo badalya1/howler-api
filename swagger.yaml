@@ -1,53 +1,34 @@
 tags:
-- name: users
-  description: users API
+  - name: users
+    description: users API
 
 paths:
-# [GET] users
+  # [GET] users
   /users:
     get:
       tags:
-      - users
+        - users
       summary: Find All Users
+      security: ["Authorization Cookie"]
       responses:
         200:
           description: 'OK'
         500:
           description: 'Server Error'
 
-# [POST] users
-    post:
-      tags:
-      - users
-      summary: Add User
-      parameters:
-      - name: body
-        in: body
-        description: user Data
-        required: true
-        schema:
-          $ref: '#/definitions/users'
-      responses:
-        201:
-          description: 'Created'
-        400:
-          description: 'Bad Request'
-        409:
-          description: 'Conflict'
-        500:
-          description: 'Server Error'
 
-# [GET] users/id
+  # [GET] users/id
   /users/{id}:
     get:
       tags:
-      - users
+        - users
       summary: Find User By Id
       parameters:
-      - name: id
-        in: path
-        description: User Id
-        required: true
+        - name: id
+          type: string
+          in: path
+          description: User Id
+          required: true
       responses:
         200:
           description: 'OK'
@@ -56,22 +37,23 @@ paths:
         500:
           description: 'Server Error'
 
-# [PUT] users/id
+    # [PUT] users/id
     put:
       tags:
-      - users
+        - users
       summary: Update User By Id
       parameters:
-      - name: id
-        in: path
-        description: user Id
-        required: true
-      - name: body
-        in: body
-        description: user Data
-        required: true
-        schema:
-          $ref: '#/definitions/users'
+        - name: id
+          type: string
+          in: path
+          description: user Id
+          required: true
+        - name: body
+          in: body
+          description: user Data
+          required: true
+          schema:
+            $ref: '#/definitions/users'
       responses:
         200:
           description: 'OK'
@@ -82,16 +64,17 @@ paths:
         500:
           description: 'Server Error'
 
-# [DELETE] users/id
+    # [DELETE] users/id
     delete:
       tags:
-      - users
+        - users
       summary: Delete User By Id
       parameters:
-      - name: id
-        in: path
-        description: user Id
-        required: true
+        - name: id
+          type: string
+          in: path
+          description: user Id
+          required: true
       responses:
         200:
           description: 'OK'
@@ -99,24 +82,60 @@ paths:
           description: 'Conflict'
         500:
           description: 'Server Error'
+  /login:
+    post:
+      summary: Logs in and returns the authentication cookie
+      requestBody:
+        required: true
+        description: A JSON object containing the login and password.
+      security: []    # no authentication
+      responses:
+        '200':
+          description: >
+            Successfully authenticated.
+            The Autherization token is returned in a cookie named `Authorization`. You need to include this cookie in subsequent requests.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: Authorization=abcde12345; HttpOnly; Path=/; Expires=Sun, 24 Jan 2021 03:45:42 GMT;
 
-# definitions
+securityDefinitions:
+  Cookie:
+    type: apiKey
+    name: Authorization Cookie
+    in: cookies
+                # definitions
 definitions:
   users:
     type: object
     required:
-        - username
-        - password
+      - username
+      - password
     properties:
       id:
-        description: user Id
+        description: Unique id for the user
       username:
         type: string
-        description: Unique username
+        description: unique username
       password:
         type: string
-        description: user Password
+        description: password set by the user
+  howls:
+    type: object
+    required:
+      - text
+    properties:
+      id:
+        description: The unique identifier for the howl
+      text:
+        type: string
+        description: Content of the howl
+      userId:
+        type: string
+        description: The identifier of the owner
+
 
 schemes:
- - https
- - http
+  - https
+  - http
