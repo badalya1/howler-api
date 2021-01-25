@@ -1,15 +1,38 @@
-path:
-  /register:
+paths:
+  /signup:
     post:
       tags:
-         - auth
+        - auth
       summary: "Register a new user"
       description: "Register a new user with a unique username and password"
-      operationId: "createUser"
       parameters:
       - in: "body"
         name: "body"
-        description: "Created user object"
+        description: "JSON of `username` and `password` "
         required: true
         schema:
           $ref: "#/definitions/user"
+
+  /login:
+    post:
+      tags:
+        - auth
+      summary: "Login"
+      description: "Logs in and returns the authentication cookie"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON of `username` and `password`"
+        required: true
+        schema:
+          $ref: "#/definitions/user"
+      responses:
+        '200':
+          description: >
+            Successfully authenticated.
+            The Autherization token is returned in a cookie named `Authorization`. You need to include this cookie in subsequent requests.
+          headers:
+            Set-Cookie:
+              type: string
+              description: A JWT Token of the user
+

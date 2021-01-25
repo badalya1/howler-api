@@ -1,5 +1,5 @@
 tags:
-  - name: "user"
+  - name: user
     description: "Operations about user"
   - name: howls
     description: "Operations about Howls and Likes"
