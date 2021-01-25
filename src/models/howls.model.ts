@@ -3,7 +3,7 @@ import { Howl } from '../interfaces/howls.interface';
 
 const ObjectId = Schema.Types.ObjectId;
 
-const howlsSchema: Schema = new Schema(
+export const howlsSchema: Schema = new Schema(
   {
     text: {
       type: String,
@@ -11,7 +11,18 @@ const howlsSchema: Schema = new Schema(
     },
     userId: {
       type: ObjectId,
+      ref: 'users',
       required: true,
+    },
+    likes: {
+      type: [ObjectId],
+      ref: 'users',
+      required: true,
+      default: [],
+    },
+    parentHowl: {
+      type: ObjectId,
+      ref: 'howls',
     },
   },
   {
