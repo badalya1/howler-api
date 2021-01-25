@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { User } from '../interfaces/users.interface';
 import howlService from '../services/howls.service';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { Howl } from '../interfaces/howls.interface';
 import { CreateHowlDto } from '../dtos/howls.dto';
+import HttpException from '../exceptions/HttpException';
 
 type AuthenticatedRequest = Request & { user: User & Document };
 class HowlsController {
@@ -42,7 +43,21 @@ class HowlsController {
     }
   };
 
-  public updateHowl = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {};
+  public updateHowl = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    const userId: string = req.user.id;
+    const howlId: string = req.params.id;
+    const howlData: Howl = req.body;
+
+    try {
+      const oldHowlData = await this.howlService.findHowlById(howlId);
+      if (!oldHowlData.userId.equals(userId)) throw new HttpException(403, 'You are not the owner of that howl');
+      // ? Should edited Howls be backed up in a different collection? can be used to implement edit history
+      const updateHowlData: Howl = await this.howlService.updateHowl(howlId, howlData);
+      res.status(200).json({ data: updateHowlData, message: 'Howl Updated' });
+    } catch (error) {
+      next(error);
+    }
+  };
 
   public getHowlsByUserId = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const userId: string = req.params.userId || req.user.id;

@@ -3,6 +3,7 @@ import HttpException from '../exceptions/HttpException';
 import { Howl } from '../interfaces/howls.interface';
 import howlModel from '../models/howls.model';
 import userModel from '../models/users.model';
+import { isEmpty } from '../utils/util';
 
 class HowlsService {
   public howls = howlModel;
@@ -28,6 +29,15 @@ class HowlsService {
   public async getHowlsByUserId(userId: string): Promise<Howl[]> {
     const allHowls = await this.howls.find({ userId });
     return allHowls;
+  }
+
+  public async updateHowl(howlId: string, howlData: Howl): Promise<Howl> {
+    if (isEmpty(howlData)) throw new HttpException(400, 'Howl data must be provided');
+
+    const updateHowlById: Howl = await this.howls.findByIdAndUpdate(howlId, howlData);
+    if (!updateHowlById) throw new HttpException(409, 'Cannot find the howl');
+
+    return updateHowlById;
   }
 }
 
