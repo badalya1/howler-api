@@ -21,6 +21,7 @@ class HowlsRoute implements Route {
     this.router.get(`${this.path}/user/:userId`, authMiddleware, this.howlsController.retrieveHowlsByUserId);
     this.router.get(`${this.path}/:id`, authMiddleware, this.howlsController.retrieveHowlById);
     this.router.post(`${this.path}/:id/like`, authMiddleware, this.howlsController.createLike);
+    this.router.post(`${this.path}/:id/unlike`, authMiddleware, this.howlsController.deleteLike);
     this.router.put(`${this.path}/:id`, authMiddleware, validationMiddleware(CreateHowlDto, 'body', true), this.howlsController.updateHowl);
     this.router.delete(`${this.path}/:id`, authMiddleware, this.howlsController.deleteHowl);
   }

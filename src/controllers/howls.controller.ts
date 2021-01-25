@@ -92,6 +92,17 @@ class HowlsController {
       next(error);
     }
   };
+
+  public deleteLike = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    const userId: string = req.user.id;
+    const howlId: string = req.params.id;
+    try {
+      const unlikeHowlData: Howl = await this.howlService.unlikeHowl(userId, howlId);
+      res.status(200).json({ data: unlikeHowlData, message: 'howlUnliked' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default HowlsController;

@@ -4,5 +4,5 @@ export interface Howl {
   text: string;
   userId: Types.ObjectId;
   parentHowl?: Types.ObjectId;
-  likes: [Types.ObjectId];
+  likes: Types.Array<Types.ObjectId>;
 }

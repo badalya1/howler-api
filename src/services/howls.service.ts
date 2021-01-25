@@ -56,6 +56,15 @@ class HowlsService {
     likeHowl.save();
     return likeHowl;
   }
+
+  public async unlikeHowl(userId: string, howlId: string): Promise<Howl> {
+    const unlikeHowl = (await this.findHowlById(howlId)) as Howl & Document;
+    const id = Types.ObjectId(userId);
+    if (!unlikeHowl.likes.includes(id)) throw new HttpException(409, 'Must like the howl before unliking');
+    unlikeHowl.likes.pull(id);
+    await unlikeHowl.save();
+    return unlikeHowl;
+  }
 }
 
 export default HowlsService;
