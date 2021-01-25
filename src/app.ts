@@ -85,7 +85,7 @@ class App {
           description: '',
         },
       },
-      apis: ['swagger.yaml'],
+      apis: ['swagger/tags.yaml', 'swagger/users.yaml', 'swagger/auth.yaml', 'swagger/howls.yaml'],
     };
 
     const specs = swaggerJSDoc(options);
