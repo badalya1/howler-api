@@ -39,6 +39,13 @@ class HowlsService {
 
     return updateHowlById;
   }
+
+  public async deleteHowl(howlId: string): Promise<Howl> {
+    const deleteHowlById: Howl = await this.howls.findByIdAndDelete(howlId);
+    if (!deleteHowlById) throw new HttpException(409, 'Could not delete the howl');
+
+    return deleteHowlById;
+  }
 }
 
 export default HowlsService;

@@ -69,7 +69,18 @@ class HowlsController {
     }
   };
 
-  public deleteHowl = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {};
+  public deleteHowl = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    const userId: string = req.user.id;
+    const howlId: string = req.params.id;
+    try {
+      const oldHowlData = await this.howlService.findHowlById(howlId);
+      if (!oldHowlData.userId.equals(userId)) throw new HttpException(403, 'You are not the owner of that howl');
+      const deleteHowlData: Howl = await this.howlService.deleteHowl(howlId);
+      res.status(200).json({ data: deleteHowlData, message: 'howlDeleted' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default HowlsController;
