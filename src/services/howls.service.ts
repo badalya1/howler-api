@@ -1,3 +1,4 @@
+import { Types, Document } from 'mongoose';
 import { CreateHowlDto } from '../dtos/howls.dto';
 import HttpException from '../exceptions/HttpException';
 import { Howl } from '../interfaces/howls.interface';
@@ -45,6 +46,15 @@ class HowlsService {
     if (!deleteHowlById) throw new HttpException(409, 'Could not delete the howl');
 
     return deleteHowlById;
+  }
+
+  public async likeHowl(userId: string, howlId: string): Promise<Howl> {
+    const likeHowl = (await this.findHowlById(howlId)) as Howl & Document;
+    const id = Types.ObjectId(userId);
+    if (likeHowl.likes.includes(id)) throw new HttpException(409, 'Already liking it');
+    likeHowl.likes.push(id);
+    likeHowl.save();
+    return likeHowl;
   }
 }
 

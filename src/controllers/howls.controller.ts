@@ -81,6 +81,17 @@ class HowlsController {
       next(error);
     }
   };
+
+  public createLike = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    const userId: string = req.user.id;
+    const howlId: string = req.params.id;
+    try {
+      const likeHowlData: Howl = await this.howlService.likeHowl(userId, howlId);
+      res.status(200).json({ data: likeHowlData, message: 'howlLiked' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default HowlsController;
