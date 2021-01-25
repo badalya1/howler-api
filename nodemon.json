@@ -1,6 +1,6 @@
 {
-  "watch": ["src", ".env", "swagger.yaml"],
-  "ext": "js,ts,json",
+  "watch": ["src", ".env", "swagger"],
+  "ext": "js,ts,json,yaml",
   "ignore": ["src/**/*.spec.ts", "src/**/*.test.ts"],
   "exec": "ts-node  --transpile-only src/server.ts"
 }
