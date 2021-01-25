@@ -11,7 +11,7 @@ class HowlsController {
   public howlService = new howlService();
 
   /* eslint-disable */
-  public getHowls = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  public retrieveHowls = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
       const findAllHowls: Howl[] = await this.howlService.findAllHowls();
       res.status(200).json({ data: findAllHowls, message: 'AllHowls' });
@@ -20,7 +20,7 @@ class HowlsController {
     }
   };
 
-  public getHowlById = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  public retrieveHowlById = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const howlId: string = req.params.id;
 
     try {
@@ -59,7 +59,7 @@ class HowlsController {
     }
   };
 
-  public getHowlsByUserId = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  public retrieveHowlsByUserId = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const userId: string = req.params.userId || req.user.id;
     try {
       const howlsByUserId: Howl[] = await this.howlService.getHowlsByUserId(userId);
