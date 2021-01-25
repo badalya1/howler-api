@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { User } from '../interfaces/users.interface';
 import howlService from '../services/howls.service';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 import { Howl } from '../interfaces/howls.interface';
 import { CreateHowlDto } from '../dtos/howls.dto';
 import HttpException from '../exceptions/HttpException';
