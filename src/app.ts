@@ -80,9 +80,9 @@ class App {
     const options = {
       swaggerDefinition: {
         info: {
-          title: 'Howler REST API',
+          title: 'Howler API',
           version: '0.0.1',
-          description: 'Howler REST API provides endpoints for ',
+          description: '',
         },
       },
       apis: ['swagger.yaml'],
