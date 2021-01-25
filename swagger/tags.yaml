@@ -1,0 +1,7 @@
+tags:
+  - name: "user"
+    description: "Operations about user"
+  - name: howls
+    description: "Operations about Howls and Likes"
+  - name: auth
+    description: "Operations about authentication and registration"

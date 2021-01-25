@@ -1,0 +1,42 @@
+paths:
+  /user:
+    get:
+      tags:
+         - user
+      summary: "Get list of all users"
+      description: "This can only be done by the logged in user."
+    put:
+      tags:
+         - user
+      summary: "Update user"
+      description: "This can only be done by the logged in user."
+    delete:
+      tags:
+         - user
+      summary: "Delete the user"
+      description: "This can only be done by the logged in user."
+  /user/{id}:
+    get:
+      tags:
+         - user
+      summary: "Get a specific user by ID"
+      description: "This can only be done by the logged in user."
+
+
+
+
+
+
+definitions:
+  user:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      id:
+        description: Unique id for the user
+      username:
+        type: string
+      password:
+        type: string

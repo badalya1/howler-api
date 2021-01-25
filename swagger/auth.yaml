@@ -1,0 +1,15 @@
+path:
+  /register:
+    post:
+      tags:
+         - auth
+      summary: "Register a new user"
+      description: "Register a new user with a unique username and password"
+      operationId: "createUser"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/user"

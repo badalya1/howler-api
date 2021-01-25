@@ -1,0 +1,92 @@
+paths:
+  /howls:
+    get:
+      tags:
+        - howls
+      summary: "Find all howls"
+      description: "This can only be done by the logged in user."
+      responses:
+        200:
+          description: 'OK'
+    post:
+      tags:
+        - howls
+      summary: "Create a new howl"
+      description: "This can only be done by the logged in user."
+      responses:
+        200:
+          description: 'OK'
+
+  /howls/{id}:
+    get:
+      tags:
+        - howls
+      summary: Get howl by ID
+      description: "This can only be done by the logged in user."
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+    put:
+      tags:
+         - howls
+      summary: "Update a howl"
+      description: "This can only be done by the owner of the howl."
+    delete:
+      tags:
+        - howls
+      summary: Delete a howl
+      description: "This can only be done by the owner of the howl."
+  /howls/user:
+    get:
+      tags:
+        - howls
+      summary: Get howls created by the logged in user
+      description: "This can only be done by the logged in user."
+  /howls/user/{userId}:
+    get:
+      tags:
+        - howls
+      summary: Get howls created by a specific user
+      description: "This can only be done by the logged in user."
+  /howls/{id}/like:
+    post:
+      tags:
+        - howls
+      summary: Like a howl
+      description: "This can only be done by the logged in user."
+  /howls/{od}/unlike:
+    post:
+      tags:
+        - howls
+      summary: Unlike a howl
+      description: "This can only be done by the logged in user."
+
+
+
+
+definitions:
+  howls:
+    type: object
+    required:
+      - text
+    properties:
+      id:
+        description: The unique identifier for the howl
+      text:
+        type: string
+        description: Content of the howl
+      userId:
+        type: string
+        description: ID of the creator
+      likes:
+        type: list
+        description: List of IDs of users who liked the howl
+
+
+schemes:
+  - https
+  - http
